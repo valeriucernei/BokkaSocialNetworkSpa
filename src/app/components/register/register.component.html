@@ -1,0 +1,111 @@
+<mat-progress-bar mode="indeterminate" *ngIf="isProgressBarVisible"></mat-progress-bar>
+
+<h1 mat-dialog-title>Sing Up</h1>
+<div mat-dialog-content>
+  <form [formGroup]="form" novalidate class="row" (ngSubmit)="onSubmit()">
+
+    <mat-form-field class="row-item">
+      <mat-label>First Name</mat-label>
+      <input matInput
+             placeholder="Valeriu"
+             name="firstName"
+             formControlName="firstName">
+
+      <mat-error *ngIf="form.get(['firstName'])!.hasError('required')">
+        First Name is <strong>required</strong>.
+      </mat-error>
+      <mat-error *ngIf="form.get(['firstName'])!.hasError('minlength')">
+        Min length: 3 characters.
+      </mat-error>
+      <mat-error *ngIf="form.get(['firstName'])!.hasError('maxlength')">
+        Max length: 24 characters.
+      </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="row-item">
+      <mat-label>Last Name</mat-label>
+      <input matInput
+             placeholder="Cernei"
+             name="lastName"
+             formControlName="lastName">
+
+      <mat-error *ngIf="form.get(['lastName'])!.hasError('maxlength')">
+        Max length: 24 characters.
+      </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="row-item">
+      <mat-label>Username</mat-label>
+      <input matInput
+             placeholder="valeriucernei"
+             name="username"
+             formControlName="username">
+
+      <mat-error *ngIf="form.get(['username'])!.hasError('required')">
+        Username is <strong>required</strong>.
+      </mat-error>
+      <mat-error *ngIf="form.get(['username'])!.hasError('minlength')">
+        Min length: 5 characters.
+      </mat-error>
+      <mat-error *ngIf="form.get(['username'])!.hasError('maxlength')">
+        Max length: 32 characters.
+      </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="row-item">
+      <mat-label>Email</mat-label>
+      <input matInput
+             placeholder="valeriu@example.com"
+             type="email"
+             name="email"
+             formControlName="email">
+
+      <mat-error *ngIf="form.get(['email'])!.hasError('required')">
+        Email address is <strong>required</strong>.
+      </mat-error>
+      <mat-error *ngIf="form.get(['email'])!.hasError('email')">
+        Email not valid.
+      </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="row-item">
+      <mat-label>Password</mat-label>
+      <input matInput
+             type="password"
+             name="password"
+             formControlName="password">
+
+      <mat-error *ngIf="form.get(['password'])!.hasError('required')">
+        Password is <strong>required</strong>.
+      </mat-error>
+      <mat-error *ngIf="form.get(['password'])!.hasError('minlength')">
+        Min length: 6 characters.
+      </mat-error>
+      <mat-error *ngIf="form.get(['password'])!.hasError('maxlength')">
+        Max length: 32 characters.
+      </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="row-item">
+      <mat-label>Confirm password</mat-label>
+      <input matInput
+             type="password"
+             name="confirmPassword"
+             formControlName="confirmPassword"
+             required>
+      <mat-error *ngIf="form.hasError('matching')">
+        Passwords <strong>doesn't</strong> match.
+      </mat-error>
+    </mat-form-field>
+
+
+    <button mat-stroked-button mat-dialog-close="true">Cancel</button>
+    <button type="submit" class="submit-button" mat-raised-button color="primary" [disabled]="!form.valid || isProgressBarVisible">Continue</button>
+
+  </form>
+</div>

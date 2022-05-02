@@ -1,0 +1,106 @@
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from "@angular/forms";
+import {UserService} from "../../services/user.service";
+import {SnackService} from "../../services/snack.service";
+import {MatDialogRef} from "@angular/material/dialog";
+import {UserForRegister} from "../../models/User/UserForRegister";
+import {Response} from "../../models/Response";
+
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
+})
+export class RegisterComponent implements OnInit {
+
+  isProgressBarVisible: boolean = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private snackService: SnackService,
+    public dialogRef: MatDialogRef<RegisterComponent>
+  ) {}
+
+  form: FormGroup = this.CreateForm();
+
+  ngOnInit(): void {
+    const initialData = {
+      firstName: null,
+      lastName: null,
+      username: null,
+      email: null,
+      password: null,
+      confirmPassword: null
+    };
+
+    this.form.patchValue(initialData);
+  }
+
+  onSubmit() {
+    this.isProgressBarVisible = true;
+
+    const userRegister: UserForRegister = {
+      ...this.form.value
+    };
+
+    this.userService.register(userRegister)
+      .subscribe((response: Response) => {
+        this.isProgressBarVisible = false;
+
+        if (!response) return;
+
+        this.dialogRef.close();
+        this.snackService.openSnack(response.message);
+      })
+  }
+
+  private CreateForm(): FormGroup {
+    return this.fb.group({
+        firstName: ['', [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(24)]],
+
+        lastName: ['',
+          Validators.maxLength(24)],
+
+        username: ['', [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(32)]],
+
+        email: ['', [
+          Validators.required,
+          Validators.email]],
+
+        password: ['', [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(32)]],
+
+        confirmPassword: ['',
+          Validators.required]
+      },
+      {
+        validators: this.match('password', 'confirmPassword')
+      });
+  }
+
+  private match(controlName: string, checkControlName: string): ValidatorFn {
+    return (controls: AbstractControl) => {
+      const control = controls.get(controlName);
+      const checkControl = controls.get(checkControlName);
+      if (checkControl?.errors && !checkControl.errors['matching']) {
+        return null;
+      }
+      if (control?.value !== checkControl?.value) {
+        controls.get(checkControlName)?.setErrors({ matching: true });
+        return { matching: true };
+      } else {
+        return null;
+      }
+    };
+  }
+
+}

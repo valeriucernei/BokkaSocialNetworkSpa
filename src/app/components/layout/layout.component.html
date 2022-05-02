@@ -1,0 +1,53 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>
+      <mat-icon aria-hidden="false" aria-label="Social network">interests</mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Social network">abc</mat-icon>
+    </mat-toolbar>
+    <mat-nav-list>
+      <mat-divider></mat-divider>
+      <a mat-list-item href="#">Feed</a>
+      <a mat-list-item href="#">New Post</a>
+      <a mat-list-item href="#">Search</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item href="#">Your posts</a>
+      <a mat-list-item href="#">Your Liked posts</a>
+      <a mat-list-item href="#">TOP 5 Posts</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item href="#">Settings</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Social Network</span>
+      <span class="spacer"></span>
+      <button mat-stroked-button class="navigation-button" (click)="openLoginDialog()" *ngIf="!userService.loggedIn">Sign In</button>
+      <button mat-raised-button class="navigation-button" (click)="openRegisterDialog()" *ngIf="!userService.loggedIn">Sign Up</button>
+      <button mat-stroked-button [mat-menu-trigger-for]="navigationProfile" *ngIf="userService.loggedIn">Valeriu Cernei</button>
+
+      <mat-menu #navigationProfile="matMenu">
+        <button mat-menu-item>Your Profile</button>
+        <button mat-menu-item>Settings</button>
+        <button mat-menu-item>Change password</button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="userService.logOut()">Log out</button>
+      </mat-menu>
+
+    </mat-toolbar>
+    <mat-progress-bar mode="indeterminate" *ngIf="true"></mat-progress-bar>
+    <div class="content">
+      <ng-content></ng-content>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

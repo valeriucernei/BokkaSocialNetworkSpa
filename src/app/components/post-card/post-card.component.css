@@ -1,0 +1,62 @@
+* {
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
+
+.post-card {
+  width: 100%;
+  padding: 8px;
+}
+
+mat-card {
+  height: 500px;
+}
+
+mat-card img {
+  height: 350px;
+  margin-bottom: 6px;
+}
+
+mat-card-content {
+  margin-bottom: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+mat-card-title {
+  overflow: hidden;
+  text-overflow: clip;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+mat-card-actions {
+  padding: 0;
+}
+
+.image-container:hover .continue-button {
+  opacity: 0.8;
+}
+
+.continue-button {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+

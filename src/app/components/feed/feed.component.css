@@ -1,0 +1,37 @@
+* {
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+.post-card {
+  flex: 25%;
+  max-width: 25%;
+  padding: 8px;
+}
+
+@media (max-width: 1250px) {
+  .post-card {
+    flex: 33%;
+    max-width: 33%;
+  }
+}
+
+@media (max-width: 900px) {
+  .post-card {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 650px) {
+  .post-card {
+    flex: 100%;
+    max-width: 100%;
+  }
+}

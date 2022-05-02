@@ -2,15 +2,58 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { AppRoutingModule } from "./app-routing.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatListModule} from "@angular/material/list";
+import {MatButtonModule} from "@angular/material/button";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatIconModule} from "@angular/material/icon";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatInputModule} from "@angular/material/input";
+import {MatCardModule} from "@angular/material/card";
+import { PostCardComponent } from './components/post-card/post-card.component';
+import { FeedComponent } from './components/feed/feed.component';
+import { LayoutComponent } from './components/layout/layout.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {DelayInterceptor} from "./interceptors/DelayInterceptor";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    PostCardComponent,
+    FeedComponent,
+    LayoutComponent
   ],
   imports: [
-    BrowserModule
+    AppRoutingModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatListModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatCardModule,
+    HttpClientModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: DelayInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,13 @@
+mat-form-field {
+  width: 100%;
+}
+
+mat-progress-bar {
+  width:400px;
+  left:-24px;
+  top: -24px;
+}
+
+.submit-button {
+  float: right;
+}

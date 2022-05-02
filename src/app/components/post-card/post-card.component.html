@@ -1,0 +1,37 @@
+<div class="post-card" >
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Card Title Title Title Title Title Title
+        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before">
+          <button mat-menu-item>Expand</button>
+          <button mat-menu-item>Remove</button>
+        </mat-menu>
+      </mat-card-title>
+      <mat-card-subtitle>Posted 2 days ago</mat-card-subtitle>
+    </mat-card-header>
+
+    <div class="image-container">
+      <img mat-card-image src='https://www.w3schools.com/w3images/wedding.jpg' alt="">
+      <button mat-flat-button class="continue-button">Open</button>
+    </div>
+
+    <mat-card-content>
+      <div><strong>@valeriucernei</strong> - Card Content Here Card Content Here Card Content Here Card Content Here </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-icon-button>
+        <mat-icon>favorite_border</mat-icon>
+      </button>
+      <button mat-icon-button color="warn">
+        <mat-icon>favorite</mat-icon>
+      </button>
+      123 Likes
+    </mat-card-actions>
+
+  </mat-card>
+</div>
