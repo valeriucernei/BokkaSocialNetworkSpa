@@ -1,0 +1,22 @@
+.profile {
+  width: 99%;
+  padding: 8px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row-item{
+  flex: 45%;
+  max-width: 45%;
+  padding: 8px;
+}
+
+@media (max-width: 600px) {
+  .row-item {
+    flex: 100%;
+    max-width: 100%;
+  }
+}

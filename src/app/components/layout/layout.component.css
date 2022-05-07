@@ -27,11 +27,15 @@
   margin-left: 16px;
 }
 
-.content {
+mat-sidenav-content {
   background-color: #f0fffd;
+}
+
+.content {
   padding: 8px;
 }
 
 .spacer {
   flex: 1 1 auto;
 }
+

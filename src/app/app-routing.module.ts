@@ -1,12 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from "@angular/router";
-import { RegisterComponent } from "./components/register/register.component";
 import {FeedComponent} from "./components/feed/feed.component";
+import {SearchComponent} from "./components/search/search.component";
+import {ProfileComponent} from "./components/profile/profile.component";
+import {AuthGuard} from "./guards/auth.guard";
+import {TopComponent} from "./components/top/top.component";
+import {PersonalPostsComponent} from "./components/personal-posts/personal-posts.component";
 
 const routes: Routes = [
   { path: '', component: FeedComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'search', component: SearchComponent },
+  { path: 'top', component: TopComponent },
+  { path: 'personal-posts', component: PersonalPostsComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ]
 

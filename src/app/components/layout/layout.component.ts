@@ -4,7 +4,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {MatDialog} from "@angular/material/dialog";
 import {LoginComponent} from "../login/login.component";
 import {RegisterComponent} from "../register/register.component";
-import {UserService} from "../../services/user.service";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-layout',
@@ -21,12 +21,12 @@ export class LayoutComponent implements OnInit{
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    public userService: UserService,
-    private dialog: MatDialog,
+    public authService: AuthService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    this.userService.checkUserToken();
+    this.authService.checkUserToken();
   }
 
   openLoginDialog() {
@@ -39,6 +39,13 @@ export class LayoutComponent implements OnInit{
     this.dialog.open(RegisterComponent, {
       width: '400px'
     });
+  }
+
+  getFullName():string {
+    const token = this.authService.getToken();
+    const decoded_token = this.authService.decodeToken(token);
+
+    return decoded_token['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname'];
   }
 
 }

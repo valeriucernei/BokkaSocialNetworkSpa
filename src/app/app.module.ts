@@ -23,7 +23,16 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {DelayInterceptor} from "./interceptors/DelayInterceptor";
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { SearchComponent } from './components/search/search.component';
+import {DelayInterceptor} from "./interceptors/delay.interceptor";
+import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import { ProfileComponent } from './components/profile/profile.component';
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import { TopComponent } from './components/top/top.component';
+import { PersonalPostsComponent } from './components/personal-posts/personal-posts.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +41,11 @@ import {DelayInterceptor} from "./interceptors/DelayInterceptor";
     RegisterComponent,
     PostCardComponent,
     FeedComponent,
-    LayoutComponent
+    LayoutComponent,
+    SearchComponent,
+    ProfileComponent,
+    TopComponent,
+    PersonalPostsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -51,9 +64,15 @@ import {DelayInterceptor} from "./interceptors/DelayInterceptor";
     MatCardModule,
     HttpClientModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTableModule,
+    MatPaginatorModule,
+    InfiniteScrollModule,
+    MatSortModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: DelayInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: DelayInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

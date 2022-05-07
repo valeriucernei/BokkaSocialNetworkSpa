@@ -4,12 +4,26 @@
 }
 
 .post-card {
-  width: 100%;
+  max-width: 600px;
   padding: 8px;
+  margin: auto;
 }
 
 mat-card {
-  height: 500px;
+  /*height: 500px;*/
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .post-card {
+    /*max-width: 80%;*/
+  }
+}
+
+@media (max-width: 1000px) {
+  .post-card {
+    /*max-width: 90%;*/
+  }
 }
 
 mat-card img {
@@ -17,13 +31,17 @@ mat-card img {
   margin-bottom: 6px;
 }
 
-mat-card-content {
+mat-card-content.with-photo {
   margin-bottom: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2; /* number of lines to show */
   -webkit-box-orient: vertical;
+}
+
+mat-card-content.no-photo {
+  margin-bottom: 0;
 }
 
 mat-card-title {
@@ -53,10 +71,19 @@ mat-card-actions {
   text-align: center;
 }
 
+.buy-subscription-button {
+  opacity: 1;
+  position: absolute;
+  top: 45%;
+  left: 25%;
+  text-align: center;
+}
+
 .more-button {
   position: absolute;
   top: 5px;
   right: 10px;
 }
+
 
 

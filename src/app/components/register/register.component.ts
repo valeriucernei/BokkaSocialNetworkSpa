@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from "@angular/forms";
-import {UserService} from "../../services/user.service";
 import {SnackService} from "../../services/snack.service";
 import {MatDialogRef} from "@angular/material/dialog";
 import {UserForRegister} from "../../models/User/UserForRegister";
 import {Response} from "../../models/Response";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -15,14 +15,14 @@ export class RegisterComponent implements OnInit {
 
   isProgressBarVisible: boolean = false;
 
+  form: FormGroup = this.CreateForm();
+
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
     private snackService: SnackService,
     public dialogRef: MatDialogRef<RegisterComponent>
   ) {}
-
-  form: FormGroup = this.CreateForm();
 
   ngOnInit(): void {
     const initialData = {
@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
       ...this.form.value
     };
 
-    this.userService.register(userRegister)
+    this.authService.register(userRegister)
       .subscribe((response: Response) => {
         this.isProgressBarVisible = false;
 

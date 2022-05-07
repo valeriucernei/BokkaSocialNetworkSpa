@@ -1,3 +1,20 @@
-<div class="row">
-  <app-post-card *ngFor="let number of [0,1,2,3,4,5,6,7]" class="post-card"></app-post-card>
+<div class="main">
+<mat-progress-bar mode="indeterminate" *ngIf="isProgressBarVisible"></mat-progress-bar>
+<div infinite-scroll
+     [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="50"
+     [infiniteScrollContainer]="'.main'"
+     [fromRoot]="true"
+     (scrolled)="onScrollDown($event)"
+     (scrolledUp)="onScrollUp($event)">
+  <app-post-card *ngFor="let post of pagedPosts.items" class="" [post]="post"></app-post-card>
 </div>
+
+<mat-paginator [length]="pagedPosts?.total"
+               [pageIndex]="0"
+               [pageSize]="5"
+               [pageSizeOptions]="[5, 10, 25]"
+               aria-label="Select page">
+</mat-paginator>
+</div>
+

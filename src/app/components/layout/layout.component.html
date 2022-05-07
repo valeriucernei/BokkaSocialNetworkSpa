@@ -9,15 +9,14 @@
     </mat-toolbar>
     <mat-nav-list>
       <mat-divider></mat-divider>
-      <a mat-list-item href="#">Feed</a>
-      <a mat-list-item href="#">New Post</a>
-      <a mat-list-item href="#">Search</a>
+      <a mat-list-item routerLink="">Feed</a>
+      <a mat-list-item href="#" *ngIf="authService.loggedIn">New Post</a>
+      <a mat-list-item routerLink="/search">Search</a>
       <mat-divider></mat-divider>
-      <a mat-list-item href="#">Your posts</a>
-      <a mat-list-item href="#">Your Liked posts</a>
-      <a mat-list-item href="#">TOP 5 Posts</a>
+      <a mat-list-item routerLink="/personal-posts" *ngIf="authService.loggedIn">Your posts</a>
+      <a mat-list-item routerLink="/top">TOP 5 Posts</a>
       <mat-divider></mat-divider>
-      <a mat-list-item href="#">Settings</a>
+      <a mat-list-item href="#" *ngIf="authService.loggedIn">Settings</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -32,20 +31,19 @@
       </button>
       <span>Social Network</span>
       <span class="spacer"></span>
-      <button mat-stroked-button class="navigation-button" (click)="openLoginDialog()" *ngIf="!userService.loggedIn">Sign In</button>
-      <button mat-raised-button class="navigation-button" (click)="openRegisterDialog()" *ngIf="!userService.loggedIn">Sign Up</button>
-      <button mat-stroked-button [mat-menu-trigger-for]="navigationProfile" *ngIf="userService.loggedIn">Valeriu Cernei</button>
+      <button mat-stroked-button class="navigation-button" (click)="openLoginDialog()" *ngIf="!authService.loggedIn">Sign In</button>
+      <button mat-raised-button class="navigation-button" (click)="openRegisterDialog()" *ngIf="!authService.loggedIn">Sign Up</button>
+      <button mat-stroked-button [mat-menu-trigger-for]="navigationProfile" *ngIf="authService.loggedIn">{{getFullName()}}</button>
 
       <mat-menu #navigationProfile="matMenu">
-        <button mat-menu-item>Your Profile</button>
+        <button mat-menu-item routerLink="/profile">Your Profile</button>
         <button mat-menu-item>Settings</button>
         <button mat-menu-item>Change password</button>
         <mat-divider></mat-divider>
-        <button mat-menu-item (click)="userService.logOut()">Log out</button>
+        <button mat-menu-item (click)="authService.logOut()">Log out</button>
       </mat-menu>
 
     </mat-toolbar>
-    <mat-progress-bar mode="indeterminate" *ngIf="true"></mat-progress-bar>
     <div class="content">
       <ng-content></ng-content>
     </div>

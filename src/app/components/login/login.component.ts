@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UserForLogin } from "../../models/User/UserForLogin";
-import { UserService } from "../../services/user.service";
 import { BearerToken } from "../../models/User/BearerToken";
 import { SnackService } from "../../services/snack.service";
 import { MatDialogRef } from "@angular/material/dialog";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
     private snackService: SnackService,
     public dialogRef: MatDialogRef<LoginComponent>
   ) {}
@@ -40,16 +40,17 @@ export class LoginComponent implements OnInit {
       ...this.form.value
     };
 
-    this.userService.login(userLogin)
+    this.authService.login(userLogin)
       .subscribe((bearerToken: BearerToken) => {
         this.isProgressBarVisible = false;
 
         if (!bearerToken) return;
 
         localStorage.setItem('accessToken', bearerToken.access_token);
-        this.userService.loggedIn = true;
+        this.authService.loggedIn = true;
         this.dialogRef.close();
         this.snackService.openSnack("Successfully logged in!");
+        console.log(this.authService.decodeToken(bearerToken.access_token));
       });
   }
 
