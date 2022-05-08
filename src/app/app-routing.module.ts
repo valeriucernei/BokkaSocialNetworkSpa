@@ -7,13 +7,15 @@ import {ProfileComponent} from "./components/profile/profile.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {TopComponent} from "./components/top/top.component";
 import {PersonalPostsComponent} from "./components/personal-posts/personal-posts.component";
+import {ChangePasswordComponent} from "./components/change-password/change-password.component";
 
 const routes: Routes = [
   { path: '', component: FeedComponent },
   { path: 'search', component: SearchComponent },
   { path: 'top', component: TopComponent },
-  { path: 'personal-posts', component: PersonalPostsComponent },
+  { path: 'personal-posts', component: PersonalPostsComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ]
 

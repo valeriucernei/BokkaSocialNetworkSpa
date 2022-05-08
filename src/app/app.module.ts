@@ -33,6 +33,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import { TopComponent } from './components/top/top.component';
 import { PersonalPostsComponent } from './components/personal-posts/personal-posts.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { PersonalPostsComponent } from './components/personal-posts/personal-pos
     SearchComponent,
     ProfileComponent,
     TopComponent,
-    PersonalPostsComponent
+    PersonalPostsComponent,
+    ChangePasswordComponent
   ],
   imports: [
     AppRoutingModule,

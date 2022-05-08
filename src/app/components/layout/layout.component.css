@@ -28,7 +28,9 @@
 }
 
 mat-sidenav-content {
-  background-color: #f0fffd;
+  /*background-color: #f0fffd;*/
+  background: rgb(167,162,255);
+  background: linear-gradient(324deg, rgba(167,162,255,1) 0%, rgba(244,255,219,1) 27%, rgba(194,245,255,1) 100%);
 }
 
 .content {
