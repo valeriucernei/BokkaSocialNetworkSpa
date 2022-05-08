@@ -37,7 +37,6 @@ export class PostService {
   getUserPosts(userId: string): Observable<PostListModel[]> {
     return this.http.get<PostListModel[]>(this.baseUrl + "user/" + userId);
   }
-
   getPost(postId: string): Observable<PostListModel> {
     return this.http.get<PostListModel>(this.baseUrl + "post/" + postId);
   }

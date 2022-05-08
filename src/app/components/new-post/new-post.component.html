@@ -38,6 +38,18 @@
       </mat-form-field>
       Characters: {{form.get(['content']).value.length}}/512.
 
+      <div class="row-item" style="margin-top: 16px;">
+        <input #file type="file"
+               placeholder="Choose file"
+               style="display:none;"
+               name="photo"
+               formControlName="photo"
+               accept="image/*"
+               (change)="prepareFile(file.files)">
+        <button type="button" mat-stroked-button (click)="file.click()">Upload Image <span *ngIf="progress > 0">({{progress}}%)</span></button>
+        <mat-progress-bar mode="determinate" [value]="progress" style="width: 300px;" *ngIf="progress > 0"></mat-progress-bar>
+      </div>
+
       <div class="row-item">
         <button type="submit" class="submit-button" mat-raised-button color="primary" [disabled]="!form.valid || isProgressBarVisible">Submit</button>
       </div>
