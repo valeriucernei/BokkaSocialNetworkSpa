@@ -1,4 +1,4 @@
-.profile {
+.new-post {
   width: 600px;
   padding: 8px;
   margin: auto;
@@ -10,8 +10,8 @@
 }
 
 .row-item{
-  flex: 45%;
-  max-width: 45%;
+  flex: 100%;
+  max-width: 100%;
   padding: 8px;
 }
 

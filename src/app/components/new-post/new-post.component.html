@@ -1,0 +1,47 @@
+<mat-progress-bar mode="indeterminate" *ngIf="isProgressBarVisible"></mat-progress-bar>
+<div class="new-post">
+  <mat-card>
+    <mat-card-title>Create new Post</mat-card-title>
+    <form [formGroup]="form" novalidate class="row" (ngSubmit)="onSubmit()">
+
+      <mat-form-field class="row-item">
+        <mat-label>Title</mat-label>
+        <input matInput
+               placeholder="My first post"
+               name="title"
+               formControlName="title">
+
+        <mat-error *ngIf="form.get(['title'])!.hasError('required')">
+          Title is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="form.get(['title'])!.hasError('minlength')">
+          Min length: 5 characters.
+        </mat-error>
+        <mat-error *ngIf="form.get(['title'])!.hasError('maxlength')">
+          Max length: 64 characters.
+        </mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field class="row-item">
+        <mat-label>Content</mat-label>
+        <textarea matInput
+               placeholder="Today I went to the park with buddies"
+               name="content"
+               formControlName="content"
+               maxlength="512"
+               rows="8"></textarea>
+
+        <mat-error *ngIf="form.get(['content'])!.hasError('maxlength')">
+          Max length: 512 characters.
+        </mat-error>
+      </mat-form-field>
+      Characters: {{form.get(['content']).value.length}}/512.
+
+      <div class="row-item">
+        <button type="submit" class="submit-button" mat-raised-button color="primary" [disabled]="!form.valid || isProgressBarVisible">Submit</button>
+      </div>
+
+    </form>
+  </mat-card>
+</div>

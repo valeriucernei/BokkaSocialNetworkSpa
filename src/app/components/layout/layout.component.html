@@ -10,7 +10,7 @@
     <mat-nav-list>
       <mat-divider></mat-divider>
       <a mat-list-item routerLink="">Feed</a>
-      <a mat-list-item href="#" *ngIf="authService.loggedIn">New Post</a>
+      <a mat-list-item routerLink="/new-post" *ngIf="authService.loggedIn">New Post</a>
       <a mat-list-item routerLink="/search">Search</a>
       <mat-divider></mat-divider>
       <a mat-list-item routerLink="/personal-posts" *ngIf="authService.loggedIn">Your posts</a>
