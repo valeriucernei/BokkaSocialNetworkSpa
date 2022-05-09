@@ -28,6 +28,17 @@ export class AuthService {
 
   checkUserToken() {
     if (localStorage.getItem('accessToken')) {
+      const token = localStorage.getItem('accessToken');
+      const decoded = this.decodeToken(token);
+      const date = new Date(decoded.exp * 1000);
+      const current_date = new Date();
+
+      if (date < current_date) {
+        this.snackService.openSnack('Session expired.', true);
+        localStorage.removeItem('accessToken');
+        return;
+      }
+
       this.loggedIn = true;
     }
   }

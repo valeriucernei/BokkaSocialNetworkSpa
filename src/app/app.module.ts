@@ -36,6 +36,8 @@ import { PersonalPostsComponent } from './components/personal-posts/personal-pos
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { NewPostComponent } from './components/new-post/new-post.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { PlansComponent } from './components/plans/plans.component';
+import {CreditCardDirectivesModule} from "angular-cc-library";
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     TopComponent,
     PersonalPostsComponent,
     ChangePasswordComponent,
-    NewPostComponent
+    NewPostComponent,
+    PlansComponent
   ],
     imports: [
         AppRoutingModule,
@@ -74,7 +77,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatPaginatorModule,
         InfiniteScrollModule,
         MatSortModule,
-        MatTooltipModule
+        MatTooltipModule,
+        CreditCardDirectivesModule
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

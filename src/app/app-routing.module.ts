@@ -9,11 +9,13 @@ import {TopComponent} from "./components/top/top.component";
 import {PersonalPostsComponent} from "./components/personal-posts/personal-posts.component";
 import {ChangePasswordComponent} from "./components/change-password/change-password.component";
 import {NewPostComponent} from "./components/new-post/new-post.component";
+import {PlansComponent} from "./components/plans/plans.component";
 
 const routes: Routes = [
   { path: '', component: FeedComponent },
   { path: 'search', component: SearchComponent },
   { path: 'top', component: TopComponent },
+  { path: 'plans', component: PlansComponent },
   { path: 'new-post', component: NewPostComponent, canActivate: [AuthGuard] },
   { path: 'personal-posts', component: PersonalPostsComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },

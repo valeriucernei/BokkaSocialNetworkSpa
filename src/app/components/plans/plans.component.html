@@ -1,0 +1,105 @@
+<mat-progress-bar mode="indeterminate" *ngIf="isProgressBarVisible"></mat-progress-bar>
+<div class="plans">
+  <mat-card>
+    <mat-card-title>Subscription Plans</mat-card-title>
+    <div class="row">
+
+      <div class="row-item" *ngFor="let plan of plans">
+        <mat-card style="background-color: azure">
+
+          <mat-card-title style="text-align: center">{{plan.title}}</mat-card-title>
+
+          <mat-card-content>
+            {{plan.description}}
+            <div style="text-align: center">
+              <strong><br>- {{plan.days}} days.
+                <br>- {{plan.price}} $</strong>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions style="text-align: center">
+            <button mat-raised-button color="primary" (click)="choosePlan(plan.id)">Buy</button>
+          </mat-card-actions>
+
+        </mat-card>
+      </div>
+
+    </div>
+
+    <mat-card style="margin-top: 24px; background-color: aliceblue">
+      <h3>Your chosen plan: <strong>Test Plan</strong><button mat-stroked-button style="margin-left: 6px">Change</button></h3>
+      <h4>Subscription period: <strong>60 days.</strong><br>
+      Price: <strong>20 $</strong></h4>
+      <br>
+      To continue, please fill in the form below with your Visa or Mastercard bank card.
+
+      <form [formGroup]="form" novalidate class="row">
+        <mat-card style="width: 205px; background-color: cornsilk;" class="card-item">
+
+          <mat-form-field style="width: 200px;">
+            <mat-label>Card number</mat-label>
+            <input matInput
+                   type="tel"
+                   autocomplete="cc-number"
+                   formControlName="cardNumber"
+                   #ccNumber="ccNumber"
+                   ccNumber>
+            <img [src]="cardType"
+                 alt="card icon"
+                 width="32"
+                 height="32"
+                 *ngIf="checkCardType(ccNumber.resolvedScheme$)"
+                 matSuffix
+                style="margin-bottom: -10px">
+            <mat-error *ngIf="form.get(['cardNumber'])!.hasError('required')">
+              Card number is <strong>required</strong>.
+            </mat-error>
+            <mat-error *ngIf="form.get(['cardNumber'])!.hasError('ccNumber')">
+              Card number is <strong>not valid</strong>.
+            </mat-error>
+
+          </mat-form-field>
+
+          <br>
+          <mat-form-field style="width: 110px">
+            <mat-label>Expiry</mat-label>
+            <input matInput
+                   type="tel"
+                   autocomplete="cc-exp"
+                   formControlName="expiryDate"
+                   ccExp>
+            <mat-error *ngIf="form.get(['expiryDate'])!.hasError('required')">
+              Expiry date is <strong>required</strong>.
+            </mat-error>
+            <mat-error *ngIf="form.get(['expiryDate'])!.hasError('expDate')">
+              Expiry date is <strong>not valid</strong>.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="width: 60px; margin-left: 30px">
+            <mat-label>CVC</mat-label>
+            <input matInput
+                   type="tel"
+                   autocomplete="off"
+                   formControlName="cvc"
+                   ccCVC>
+            <mat-error *ngIf="form.get(['cvc'])!.hasError('required')">
+              CVC is <strong>required</strong>.
+            </mat-error>
+            <mat-error *ngIf="form.get(['cvc'])!.hasError('minlength')">
+              CVC min length is <strong>3</strong>.
+            </mat-error>
+            <mat-error *ngIf="form.get(['cvc'])!.hasError('maxlength')">
+              CVC max length is <strong>4</strong>.
+            </mat-error>
+          </mat-form-field>
+
+        </mat-card>
+        <button mat-raised-button color="primary" style="margin-left: 16px" [disabled]="!form.valid || isProgressBarVisible" class="submit-item">Pay</button>
+
+      </form>
+
+    </mat-card>
+
+  </mat-card>
+</div>

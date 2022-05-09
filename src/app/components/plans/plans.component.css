@@ -1,0 +1,54 @@
+.plans {
+  width: 600px;
+  margin: 16px auto auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+}
+
+.row-item{
+  flex: 30%;
+  max-width: 30%;
+  padding: 8px;
+}
+
+.card-item {
+  flex: 210px;
+  max-width: 210px;
+}
+
+.submit-item {
+  flex: 80px;
+  max-width: 80px;
+  max-height: 40px;
+  margin: auto 10px;
+}
+
+@media (max-width: 850px) {
+  .plans {
+    width: 98%;
+  }
+}
+
+@media (max-width: 750px) {
+  .row-item {
+    flex: 45%;
+    max-width: 45%;
+  }
+}
+
+@media (max-width: 600px) {
+  .row-item {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 440px) {
+  .submit-item {
+    margin: 16px auto;
+  }
+}
