@@ -19,6 +19,7 @@ export class NewPostComponent implements OnInit {
   isProgressBarVisible: boolean = false;
   progress: number;
   fileList: FileList;
+  imageSrc: string;
   @Output() public onUploadFinished = new EventEmitter();
 
   form: FormGroup = this.CreateForm();
@@ -39,6 +40,25 @@ export class NewPostComponent implements OnInit {
     this.fileList = files;
   }
 
+  onFileChange(event) {
+    const reader = new FileReader();
+
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.imageSrc = reader.result as string;
+      };
+
+    }
+  }
+
+  clearPhotos() {
+    this.imageSrc = undefined;
+    this.fileList = undefined;
+  }
+
   onSubmit() {
     this.isProgressBarVisible = true;
 
@@ -53,6 +73,9 @@ export class NewPostComponent implements OnInit {
         if (this.fileList.length == 0) {
           this.snackService.openSnack("Post created successfully!");
           this.isProgressBarVisible = false;
+
+          this.form.reset();
+          this.clearPhotos();
           return;
         }
 
@@ -73,6 +96,9 @@ export class NewPostComponent implements OnInit {
 
             this.snackService.openSnack("Post created successfully!");
             this.isProgressBarVisible = false;
+
+            this.form.reset();
+            this.clearPhotos();
           }
         });
   }

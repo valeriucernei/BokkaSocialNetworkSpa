@@ -35,6 +35,7 @@ import { TopComponent } from './components/top/top.component';
 import { PersonalPostsComponent } from './components/personal-posts/personal-posts.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { NewPostComponent } from './components/new-post/new-post.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -51,29 +52,30 @@ import { NewPostComponent } from './components/new-post/new-post.component';
     ChangePasswordComponent,
     NewPostComponent
   ],
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatListModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatInputModule,
-    MatSnackBarModule,
-    MatCardModule,
-    HttpClientModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatTableModule,
-    MatPaginatorModule,
-    InfiniteScrollModule,
-    MatSortModule
-  ],
+    imports: [
+        AppRoutingModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatListModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatInputModule,
+        MatSnackBarModule,
+        MatCardModule,
+        HttpClientModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatPaginatorModule,
+        InfiniteScrollModule,
+        MatSortModule,
+        MatTooltipModule
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: DelayInterceptor, multi: true }],

@@ -9,10 +9,30 @@
   flex-wrap: wrap;
 }
 
-.row-item{
+.row-item {
   flex: 100%;
   max-width: 100%;
   padding: 8px;
+}
+
+.container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  background-color: #636363;
+}
+
+.remove-photo {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.photo-progress-bar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  color: white;
 }
 
 @media (max-width: 850px) {

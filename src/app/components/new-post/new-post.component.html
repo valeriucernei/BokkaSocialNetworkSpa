@@ -45,9 +45,20 @@
                name="photo"
                formControlName="photo"
                accept="image/*"
-               (change)="prepareFile(file.files)">
+               (change)="onFileChange($event); prepareFile(file.files);">
         <button type="button" mat-stroked-button (click)="file.click()">Upload Image <span *ngIf="progress > 0">({{progress}}%)</span></button>
-        <mat-progress-bar mode="determinate" [value]="progress" style="width: 300px;" *ngIf="progress > 0"></mat-progress-bar>
+      </div>
+
+      <div class="container" *ngIf="this.fileList && this.fileList.length > 0">
+        <img [src]="imageSrc" alt="" style="object-fit: contain; width: 120px; height: 120px;">
+        <div class="photo-progress-bar" *ngIf="progress > 0">
+          <mat-progress-bar mode="determinate" [value]="progress" style="height: 6px;" color="accent"></mat-progress-bar>
+        </div>
+        <div class="remove-photo" *ngIf="progress == null">
+          <button type="button" mat-icon-button color="warn" aria-label="Example icon button with a heart icon" (click)="clearPhotos();" matTooltip="Remove photo">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </div>
       </div>
 
       <div class="row-item">
