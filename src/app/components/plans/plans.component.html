@@ -2,7 +2,7 @@
 <div class="plans">
   <mat-card>
     <mat-card-title>Subscription Plans</mat-card-title>
-    <div class="row">
+    <div class="row" *ngIf="!planChosen">
 
       <div class="row-item" *ngFor="let plan of plans">
         <mat-card style="background-color: azure">
@@ -18,7 +18,7 @@
           </mat-card-content>
 
           <mat-card-actions style="text-align: center">
-            <button mat-raised-button color="primary" (click)="choosePlan(plan.id)">Buy</button>
+            <button mat-raised-button color="primary" (click)="choosePlan(plan)">Buy</button>
           </mat-card-actions>
 
         </mat-card>
@@ -26,10 +26,12 @@
 
     </div>
 
-    <mat-card style="margin-top: 24px; background-color: aliceblue">
-      <h3>Your chosen plan: <strong>Test Plan</strong><button mat-stroked-button style="margin-left: 6px">Change</button></h3>
-      <h4>Subscription period: <strong>60 days.</strong><br>
-      Price: <strong>20 $</strong></h4>
+    <mat-card style="margin-top: 24px; background-color: aliceblue" *ngIf="planChosen">
+      <h3>Your chosen plan: <strong>{{planChosen.title}}</strong>
+        <button mat-stroked-button style="margin-left: 6px" (click)="planChosen=null">Change</button>
+      </h3>
+      <h4>Subscription period: <strong>{{planChosen.days}} days.</strong><br>
+      Price: <strong>{{planChosen.price}} $</strong></h4>
       <br>
       To continue, please fill in the form below with your Visa or Mastercard bank card.
 
@@ -95,7 +97,11 @@
           </mat-form-field>
 
         </mat-card>
-        <button mat-raised-button color="primary" style="margin-left: 16px" [disabled]="!form.valid || isProgressBarVisible" class="submit-item">Pay</button>
+        <button mat-raised-button color="primary"
+                style="margin-left: 16px"
+                [disabled]="!form.valid || isProgressBarVisible"
+                class="submit-item"
+                (click)="onSubmit()">Pay</button>
 
       </form>
 

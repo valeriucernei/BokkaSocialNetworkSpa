@@ -1,49 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {PlanModel} from "../../models/Plan/PlanModel";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CreditCardValidators} from "angular-cc-library";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
+import {PlanService} from "../../services/plan.service";
+import {SnackService} from "../../services/snack.service";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-plans',
   templateUrl: './plans.component.html',
   styleUrls: ['./plans.component.css']
 })
-export class PlansComponent implements OnInit {
+export class PlansComponent implements OnInit, AfterViewInit {
 
-  isProgressBarVisible: boolean = false;
+  isProgressBarVisible: boolean = true;
+  planChosen: PlanModel | null;
   cardType: string = environment.iconsUrl + 'default.png';
 
   form: FormGroup = this.CreateForm();
 
-  plans: PlanModel[] = [
-    {
-      id: "1",
-      title: "Plan1",
-      description: "description description description descriptiondescription description",
-      days: 30,
-      price: 5
-    },
-    {
-      id: "2",
-      title: "Plan2",
-      description: "description description description descriptiondescription description",
-      days: 90,
-      price: 10
-    },
-    {
-      id: "3",
-      title: "Plan3",
-      description: "description description description descriptiondescription description",
-      days: 180,
-      price: 20
-    }
-  ];
+  plans: PlanModel[];
+
+  plansObservable: Observable<PlanModel[]>;
 
   constructor(
     private fb: FormBuilder,
-    //private snackService: SnackService,
+    private planService: PlanService,
+    private authService: AuthService,
+    private snackService: SnackService
   ) { }
 
   ngOnInit(): void {
@@ -54,10 +40,46 @@ export class PlansComponent implements OnInit {
     };
 
     this.form.patchValue(initialData);
+
+    this.plansObservable = this.planService.getPlans();
   }
 
-  choosePlan(planId: string) {
-    console.log(planId);
+  ngAfterViewInit(): void {
+    this.loadPlansFromApi();
+  }
+
+  choosePlan(plan: PlanModel) {
+    if (!this.authService.loggedIn) {
+      this.snackService.openSnack("Only logged in users can buy subscription plan.", true);
+      return;
+    }
+    this.planChosen = plan;
+  }
+
+  onSubmit() {
+    console.log(this.form.value);
+  }
+
+  checkCardType(obj: BehaviorSubject<string>): boolean {
+    this.cardType = environment.iconsUrl
+
+    switch (obj.getValue()) {
+      case 'visa': this.cardType += 'visa.png'; break;
+      case 'mastercard': this.cardType += 'mastercard.png'; break;
+      case 'amex': this.cardType += 'amex.png'; break;
+      default: this.cardType += 'default.png'; break;
+    }
+    return true;
+  }
+
+  private loadPlansFromApi() {
+    this.isProgressBarVisible = true;
+
+    this.planService.getPlans().subscribe((plans: PlanModel[]) => {
+      this.isProgressBarVisible = false;
+      console.log(plans);
+      this.plans = plans;
+    }, )
   }
 
   private CreateForm(): FormGroup {
@@ -75,18 +97,6 @@ export class PlansComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(4)]]
     });
-  }
-
-  checkCardType(obj: BehaviorSubject<string>): boolean {
-    if (obj.getValue() == 'unknown')
-      this.cardType = environment.iconsUrl + 'default.png';
-    else if (obj.getValue() == 'visa')
-      this.cardType = environment.iconsUrl + 'visa.png';
-    else if (obj.getValue() == 'mastercard')
-      this.cardType = environment.iconsUrl + 'mastercard.png';
-    else if (obj.getValue() == 'amex')
-      this.cardType = environment.iconsUrl + 'amex.png';
-    return true;
   }
 
 }
