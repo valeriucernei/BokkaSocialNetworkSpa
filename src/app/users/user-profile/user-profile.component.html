@@ -1,0 +1,80 @@
+<mat-progress-bar mode="indeterminate" *ngIf="isProgressBarVisible"></mat-progress-bar>
+<div class="profile">
+  <mat-card>
+    <mat-card-title>User's profile</mat-card-title>
+    <form [formGroup]="form" novalidate class="row" (ngSubmit)="onSubmit()">
+
+      <mat-form-field class="row-item">
+        <mat-label>First Name</mat-label>
+        <input matInput
+               placeholder="Valeriu"
+               name="firstName"
+               formControlName="firstName">
+
+        <mat-error *ngIf="form.get(['firstName'])!.hasError('required')">
+          First Name is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="form.get(['firstName'])!.hasError('minlength')">
+          Min length: 3 characters.
+        </mat-error>
+        <mat-error *ngIf="form.get(['firstName'])!.hasError('maxlength')">
+          Max length: 24 characters.
+        </mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field class="row-item">
+        <mat-label>Last Name</mat-label>
+        <input matInput
+               placeholder="Cernei"
+               name="lastName"
+               formControlName="lastName">
+
+        <mat-error *ngIf="form.get(['lastName'])!.hasError('maxlength')">
+          Max length: 24 characters.
+        </mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field class="row-item">
+        <mat-label>Username</mat-label>
+        <input matInput
+               placeholder="valeriucernei"
+               name="username"
+               formControlName="username">
+
+        <mat-error *ngIf="form.get(['username'])!.hasError('required')">
+          Username is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="form.get(['username'])!.hasError('minlength')">
+          Min length: 5 characters.
+        </mat-error>
+        <mat-error *ngIf="form.get(['username'])!.hasError('maxlength')">
+          Max length: 32 characters.
+        </mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field class="row-item">
+        <mat-label>Email</mat-label>
+        <input matInput
+               placeholder="valeriu@example.com"
+               type="email"
+               name="email"
+               formControlName="email">
+
+        <mat-error *ngIf="form.get(['email'])!.hasError('required')">
+          Email address is <strong>required</strong>.
+        </mat-error>
+        <mat-error *ngIf="form.get(['email'])!.hasError('email')">
+          Email not valid.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="row-item">
+        <button type="submit" class="submit-button" mat-raised-button color="primary" [disabled]="!form.valid || isProgressBarVisible">Save</button>
+      </div>
+
+    </form>
+  </mat-card>
+</div>

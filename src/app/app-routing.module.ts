@@ -1,25 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from "@angular/router";
-import {FeedComponent} from "./components/feed/feed.component";
-import {SearchComponent} from "./components/search/search.component";
-import {ProfileComponent} from "./components/profile/profile.component";
-import {AuthGuard} from "./guards/auth.guard";
-import {TopComponent} from "./components/top/top.component";
-import {PersonalPostsComponent} from "./components/personal-posts/personal-posts.component";
-import {ChangePasswordComponent} from "./components/change-password/change-password.component";
-import {NewPostComponent} from "./components/new-post/new-post.component";
-import {PlansComponent} from "./components/plans/plans.component";
+import {AuthGuard} from "./_core/guards/auth.guard";
 
 const routes: Routes = [
-  { path: '', component: FeedComponent },
-  { path: 'search', component: SearchComponent },
-  { path: 'top', component: TopComponent },
-  { path: 'plans', component: PlansComponent },
-  { path: 'new-post', component: NewPostComponent, canActivate: [AuthGuard] },
-  { path: 'personal-posts', component: PersonalPostsComponent, canActivate: [AuthGuard] },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard] },
+  { path: '', loadChildren: () => import('./posts/posts.module').then(mod => mod.PostsModule)},
+  { path: 'subscriptions', loadChildren: () => import('./subscriptions/subscriptions.module').then(mod => mod.SubscriptionsModule)},
+  { path: 'profile', loadChildren: () => import('./users/users.module').then(mod => mod.UsersModule), canActivate: [AuthGuard]},
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ]
 

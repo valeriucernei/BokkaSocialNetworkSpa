@@ -1,0 +1,49 @@
+import { Injectable } from '@angular/core';
+import {environment} from "../../../environments/environment";
+import {HttpClient} from "@angular/common/http";
+import {catchError, Observable} from "rxjs";
+import {ErrorHandlingService} from "../../_core/services/error-handling.service";
+import {PostListModel} from "./models/post-list.model";
+import {PostNewModel} from "./models/post-new.model";
+import {PostModel} from "./models/post.model";
+import {PaginatedRequest} from "../../_core/models/paginated-result.model";
+import {PagedResult} from "../../_core/models/paged-result.model";
+import {PaginatedRequestNoFilters} from "../../_core/models/paginated-request-no-filters.model";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PostService {
+
+  baseUrl = environment.apiUrl + "Posts/";
+
+  constructor(
+    private http: HttpClient,
+    private errorHandling: ErrorHandlingService
+  ) { }
+
+  getPosts(paginatedRequest: PaginatedRequest): Observable<PagedResult<PostListModel>> {
+    return this.http.post<PagedResult<PostListModel>>(this.baseUrl + "search", paginatedRequest);
+  }
+
+  getPostsNoFiltering(paginatedRequest: PaginatedRequestNoFilters): Observable<PagedResult<PostListModel>> {
+    return this.http.post<PagedResult<PostListModel>>(this.baseUrl + "search", paginatedRequest);
+  }
+
+  getTopPosts(): Observable<PostListModel[]> {
+    return this.http.get<PostListModel[]>(this.baseUrl + "top");
+  }
+
+  getUserPosts(userId: string): Observable<PostListModel[]> {
+    return this.http.get<PostListModel[]>(this.baseUrl + "user/" + userId);
+  }
+
+  getPost(postId: string): Observable<PostListModel> {
+    return this.http.get<PostListModel>(this.baseUrl + "post/" + postId);
+  }
+
+  createPost(newPostModel: PostNewModel): Observable<PostModel> {
+    return this.http.post<PostModel>(this.baseUrl + "create", newPostModel)
+      .pipe(catchError(this.errorHandling.handleError<PostModel>()));
+  }
+}

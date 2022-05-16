@@ -1,0 +1,59 @@
+import {Component, Input} from '@angular/core';
+import {environment} from "../../../environments/environment";
+import {PostService} from "../shared/post.service";
+import {PostListModel} from "../shared/models/post-list.model";
+import {AuthService} from "../../_core/services/auth.service";
+import {PostLikeService} from "../shared/post-like.service";
+import {SnackService} from "../../shared/snack.service";
+import {LikeResponseModel} from "../shared/models/like-response.model";
+
+@Component({
+  selector: 'app-post',
+  templateUrl: './post.component.html',
+  styleUrls: ['./post.component.css']
+})
+export class PostComponent{
+
+  liked: boolean = false;
+
+  @Input() post: PostListModel;
+
+  baseUrl = environment.photosUrl;
+
+  constructor(
+    private postService: PostService,
+    private likeService: PostLikeService,
+    private authService: AuthService,
+    private snackService: SnackService
+  ) { }
+
+  postPhoto(): string {
+    if (this.post.photo != null)
+      return this.baseUrl + this.post.photo + '.' + this.post.photoExtension;
+  }
+
+  isPaidUser(): boolean {
+    if (!this.authService.loggedIn)
+      return false;
+    const token = this.authService.getToken();
+    const decoded_token = this.authService.decodeToken(token);
+    return decoded_token['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'PaidUser';
+  }
+
+  like() {
+    if (!this.authService.loggedIn) {
+      this.snackService.openSnack("You should Sign in, before likings posts.", true);
+      return;
+    }
+
+    this.likeService.like(this.post.id).subscribe((likeResponseModel: LikeResponseModel) => {
+      if (!likeResponseModel)
+        return;
+
+      this.liked = likeResponseModel.isLiked;
+      this.post.likesCount = likeResponseModel.likesCount;
+      this.snackService.openSnack(likeResponseModel.message);
+    })
+  }
+
+}
