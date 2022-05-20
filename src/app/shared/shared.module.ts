@@ -23,10 +23,11 @@ import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import {CreditCardDirectivesModule} from "angular-cc-library";
 import {UserLoginComponent} from "../users/user-login/user-login.component";
 import {UserRegisterComponent} from "../users/user-register/user-register.component";
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 
 
 @NgModule({
-  declarations: [UserLoginComponent, UserRegisterComponent],
+  declarations: [UserLoginComponent, UserRegisterComponent, ProgressBarComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -71,7 +72,8 @@ import {UserRegisterComponent} from "../users/user-register/user-register.compon
     InfiniteScrollModule,
     MatSortModule,
     MatTooltipModule,
-    CreditCardDirectivesModule
+    CreditCardDirectivesModule,
+    ProgressBarComponent,
   ]
 })
 export class SharedModule { }

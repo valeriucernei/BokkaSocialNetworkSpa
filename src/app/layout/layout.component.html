@@ -31,8 +31,13 @@
       </button>
       <span>Social Network</span>
       <span class="spacer"></span>
+
+      <button mat-button color="warn" routerLink="/subscriptions" *ngIf="!authService.paidUser">Buy subscription</button>
+      <button mat-button routerLink="/profile" *ngIf="authService.paidUser">Subscription Active</button>
+
       <button mat-stroked-button class="navigation-button" (click)="openLoginDialog()" *ngIf="!authService.loggedIn">Sign In</button>
       <button mat-raised-button class="navigation-button" (click)="openRegisterDialog()" *ngIf="!authService.loggedIn">Sign Up</button>
+
       <button mat-stroked-button [mat-menu-trigger-for]="navigationProfile" *ngIf="authService.loggedIn">{{getFullName()}}</button>
 
       <mat-menu #navigationProfile="matMenu">
@@ -44,6 +49,7 @@
       </mat-menu>
 
     </mat-toolbar>
+    <app-progress-bar></app-progress-bar>
     <div class="content">
       <ng-content></ng-content>
     </div>

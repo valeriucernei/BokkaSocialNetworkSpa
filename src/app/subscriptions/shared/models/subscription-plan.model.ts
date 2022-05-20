@@ -4,4 +4,5 @@ export interface SubscriptionPlanModel {
   description: string;
   days: number;
   price: number;
+  priceId: string;
 }

@@ -18,6 +18,7 @@ export class AuthService {
   baseUrl = environment.apiUrl + 'Users/';
 
   loggedIn: boolean = false;
+  paidUser: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -45,7 +46,7 @@ export class AuthService {
 
   logOut(): void {
     localStorage.removeItem('accessToken');
-    this.loggedIn = false;
+    this.loggedIn = this.paidUser = false;
     this.router.navigate(['/']).then();
     this.snackService.openSnack('Successfully logged out.');
   }
@@ -56,6 +57,12 @@ export class AuthService {
       .pipe(catchError(this.errorHandling.handleError<BearerToken>()));
   }
 
+  refreshToken():Observable<BearerToken> {
+    return this.http
+      .get<BearerToken>(this.baseUrl + 'refresh-token/')
+      .pipe(catchError(this.errorHandling.handleError<BearerToken>()));
+  }
+
   register(userForRegisterDto: UserRegisterModel): Observable<ResponseModel>{
     return this.http
       .post<ResponseModel>(this.baseUrl + 'register/', userForRegisterDto)
@@ -63,10 +70,25 @@ export class AuthService {
   }
 
   getUserId(): string {
-    let token = this.getToken();
-    let decoded = this.decodeToken(token);
+    const token = this.getToken();
+    const decoded = this.decodeToken(token);
 
     return decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'];
+  }
+
+  getUserEmail(): string {
+    const token = this.getToken();
+    const decoded = this.decodeToken(token);
+
+    return decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
+  }
+
+  updateUserPaidStatus() {
+    const token = this.getToken();
+    const decoded = this.decodeToken(token);
+    const role:string[] = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+
+    this.paidUser = role.includes('PaidUser');
   }
 
   getToken(): string {

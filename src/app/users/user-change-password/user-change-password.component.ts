@@ -12,8 +12,6 @@ import {UserChangePasswordModel} from "../shared/models/user-change-password.mod
 })
 export class UserChangePasswordComponent implements OnInit {
 
-  isProgressBarVisible: boolean = false;
-
   form: FormGroup = this.CreateForm();
 
   constructor(
@@ -27,7 +25,7 @@ export class UserChangePasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isProgressBarVisible = true;
+    this.form.disable();
 
     const formData: UserChangePasswordModel = {
       ...this.form.value
@@ -35,7 +33,7 @@ export class UserChangePasswordComponent implements OnInit {
 
     this.userService.updatePassword(formData)
       .subscribe((response: any) => {
-        this.isProgressBarVisible = false;
+        this.form.enable();
 
         if (!response) return;
 

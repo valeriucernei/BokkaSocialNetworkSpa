@@ -12,6 +12,7 @@ import {SharedModule} from "./shared/shared.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {ProgressInterceptor} from "./_core/interceptors/progress.interceptor";
 
 @NgModule({
   declarations: [
@@ -27,9 +28,10 @@ import {MatInputModule} from "@angular/material/input";
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule,
+    MatInputModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ProgressInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: DelayInterceptor, multi: true }],
   bootstrap: [AppComponent]

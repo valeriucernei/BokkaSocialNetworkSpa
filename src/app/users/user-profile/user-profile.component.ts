@@ -12,8 +12,6 @@ import {UserProfileModel} from "../shared/models/user-profile.model";
 })
 export class UserProfileComponent implements OnInit {
 
-  isProgressBarVisible: boolean = false;
-
   form: FormGroup = this.CreateForm();
 
   constructor(
@@ -28,26 +26,26 @@ export class UserProfileComponent implements OnInit {
   }
 
   loadDataFromApi() {
-    this.isProgressBarVisible = true;
+    this.form.disable();
 
     this.userService.getPersonalProfileData()
       .subscribe((personalProfileModel: UserProfileModel) => {
-        this.isProgressBarVisible = false;
+        this.form.enable();
 
         this.form.patchValue(personalProfileModel);
       });
   }
 
   onSubmit() {
-    this.isProgressBarVisible = true;
-
     const formData: UserProfileModel = {
       ...this.form.value
     };
 
+    this.form.disable();
+
     this.userService.updatePersonalProfileData(formData)
       .subscribe((personalProfileModel: UserProfileModel) => {
-        this.isProgressBarVisible = false;
+        this.form.enable();
 
         if (!personalProfileModel) return;
 

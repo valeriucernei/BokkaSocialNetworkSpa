@@ -23,21 +23,13 @@ export class PostComponent{
   constructor(
     private postService: PostService,
     private likeService: PostLikeService,
-    private authService: AuthService,
+    public authService: AuthService,
     private snackService: SnackService
   ) { }
 
   postPhoto(): string {
     if (this.post.photo != null)
       return this.baseUrl + this.post.photo + '.' + this.post.photoExtension;
-  }
-
-  isPaidUser(): boolean {
-    if (!this.authService.loggedIn)
-      return false;
-    const token = this.authService.getToken();
-    const decoded_token = this.authService.decodeToken(token);
-    return decoded_token['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] == 'PaidUser';
   }
 
   like() {

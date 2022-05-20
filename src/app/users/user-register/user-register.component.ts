@@ -39,6 +39,7 @@ export class UserRegisterComponent implements OnInit {
 
   onSubmit() {
     this.isProgressBarVisible = true;
+    this.form.disable();
 
     const userRegister: UserRegisterModel = {
       ...this.form.value
@@ -47,6 +48,7 @@ export class UserRegisterComponent implements OnInit {
     this.authService.register(userRegister)
       .subscribe((response: ResponseModel) => {
         this.isProgressBarVisible = false;
+        this.form.enable();
 
         if (!response) return;
 

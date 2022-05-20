@@ -17,9 +17,7 @@ import {Filter} from "../../_core/models/filter.model";
   templateUrl: './post-search.component.html',
   styleUrls: ['./post-search.component.css']
 })
-export class PostSearchComponent implements AfterViewInit {
-
-  isProgressBarVisible: boolean = true;
+export class PostSearchComponent implements AfterViewInit{
 
   pagedPosts: PagedResult<PostListModel>;
 
@@ -72,13 +70,10 @@ export class PostSearchComponent implements AfterViewInit {
   }
 
   loadPostsFromApi() {
-    this.isProgressBarVisible = true;
     const paginatedRequest = new PaginatedRequest(this.paginator, this.sort, this.requestFilters);
     this.postService.getPosts(paginatedRequest)
       .subscribe( (pagedPosts: PagedResult<PostListModel>) => {
-        console.log(pagedPosts);
         this.pagedPosts = pagedPosts;
-        this.isProgressBarVisible = false;
       });
   }
 

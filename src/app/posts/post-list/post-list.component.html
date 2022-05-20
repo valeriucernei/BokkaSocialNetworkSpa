@@ -1,8 +1,6 @@
 <div class="main">
-  <mat-progress-bar mode="indeterminate" *ngIf="isProgressBarVisible"></mat-progress-bar>
   <app-post *ngFor="let post of pagedPosts.items" class="" [post]="post"></app-post>
-
-  <mat-paginator [length]="pagedPosts?.total"
+  <mat-paginator [length]="pagedPosts.total"
                  [pageIndex]="0"
                  [pageSize]="5"
                  [pageSizeOptions]="[5, 10, 25]"

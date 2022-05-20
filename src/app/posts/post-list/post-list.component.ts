@@ -11,17 +11,13 @@ import {PaginatedRequestNoFilters} from "../../_core/models/paginated-request-no
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.css']
 })
-export class PostListComponent implements AfterViewInit {
-
-  isProgressBarVisible: boolean = true;
+export class PostListComponent implements AfterViewInit{
 
   pagedPosts: PagedResult<PostListModel>
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(
-    private postService: PostService
-  ) {
+  constructor(private postService: PostService) {
     this.pagedPosts = {
       pageIndex: 0,
       pageSize: 5,
@@ -36,17 +32,13 @@ export class PostListComponent implements AfterViewInit {
     merge(this.paginator.page).subscribe(() => {
       this.loadPostsFromApi();
     })
-
   }
 
   loadPostsFromApi() {
-    this.isProgressBarVisible = true;
     const paginatedRequest = new PaginatedRequestNoFilters(this.paginator);
     this.postService.getPostsNoFiltering(paginatedRequest)
       .subscribe( (pagedPosts: PagedResult<PostListModel>) => {
-        console.log(pagedPosts);
         this.pagedPosts = pagedPosts;
-        this.isProgressBarVisible = false;
       });
   }
 

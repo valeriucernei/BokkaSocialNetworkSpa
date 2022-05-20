@@ -9,12 +9,14 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {CreditCardDirectivesModule} from "angular-cc-library";
 import {SubscriptionsRoutingModule} from "./subscriptions-routing.module";
+import { SubscriptionSuccessComponent } from './subscription-success/subscription-success.component';
 
 
 
 @NgModule({
   declarations: [
-    SubscriptionPlansComponent
+    SubscriptionPlansComponent,
+    SubscriptionSuccessComponent
   ],
   imports: [
     SubscriptionsRoutingModule,

@@ -16,7 +16,6 @@ import {PostNewModel} from "../shared/models/post-new.model";
 })
 export class PostNewComponent{
 
-  isProgressBarVisible: boolean = false;
   progress: number;
   fileList: FileList;
   imageSrc: string;
@@ -47,7 +46,6 @@ export class PostNewComponent{
       reader.onload = () => {
         this.imageSrc = reader.result as string;
       };
-
     }
   }
 
@@ -57,20 +55,20 @@ export class PostNewComponent{
   }
 
   onSubmit() {
-    this.isProgressBarVisible = true;
-
     const formData: PostNewModel = {
       ...this.form.value
     };
 
+    this.form.disable();
+
     this.postService.createPost(formData)
       .subscribe((postModel: PostModel) => {
+        this.form.enable();
+
         if (!postModel) return;
 
         if (this.fileList.length == 0) {
           this.snackService.openSnack("Post created successfully!");
-          this.isProgressBarVisible = false;
-
           this.form.reset();
           this.clearPhotos();
           return;
@@ -88,9 +86,7 @@ export class PostNewComponent{
 
         else if (event.type === HttpEventType.Response) {
           this.onUploadFinished.emit(event.body);
-
           this.snackService.openSnack("Post created successfully!");
-          this.isProgressBarVisible = false;
 
           this.form.reset();
           this.clearPhotos();

@@ -35,6 +35,7 @@ export class UserLoginComponent implements OnInit {
 
   onSubmit() {
     this.isProgressBarVisible = true;
+    this.form.disable();
 
     const userLogin: UserLoginModel = {
       ...this.form.value
@@ -43,10 +44,12 @@ export class UserLoginComponent implements OnInit {
     this.authService.login(userLogin)
       .subscribe((bearerToken: BearerToken) => {
         this.isProgressBarVisible = false;
+        this.form.enable();
 
         if (!bearerToken) return;
 
         localStorage.setItem('accessToken', bearerToken.access_token);
+        this.authService.updateUserPaidStatus();
         this.authService.loggedIn = true;
         this.dialogRef.close();
         this.snackService.openSnack("Successfully logged in!");

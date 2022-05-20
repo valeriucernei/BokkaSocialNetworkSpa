@@ -7,14 +7,14 @@
       <mat-card-subtitle>{{post.createdDateTime | date:'medium'}}</mat-card-subtitle>
     </mat-card-header>
 
-    <div class="image-container" *ngIf="postPhoto() && isPaidUser()">
+    <div class="image-container" *ngIf="postPhoto() && authService.paidUser">
       <img mat-card-image [src]="postPhoto()" alt="">
       <button mat-flat-button class="continue-button">Open</button>
     </div>
 
-    <div class="image-container" *ngIf="postPhoto() && !isPaidUser()">
-      <img mat-card-image *ngIf="postPhoto() && !isPaidUser()" src="https://www.creativefabrica.com/wp-content/uploads/2019/09/28/10-Blurred-Background-by-Manuchi-4-580x387.png" alt="">
-      <button mat-flat-button class="buy-subscription-button">To see the image, buy Subscription</button>
+    <div class="image-container" *ngIf="postPhoto() && !authService.paidUser">
+      <img mat-card-image *ngIf="postPhoto() && !authService.paidUser" src="https://www.creativefabrica.com/wp-content/uploads/2019/09/28/10-Blurred-Background-by-Manuchi-4-580x387.png" alt="">
+      <button mat-flat-button class="buy-subscription-button" routerLink="/subscriptions">To see the image, buy Subscription</button>
     </div>
 
     <mat-card-content class="with-photo" *ngIf="postPhoto()">

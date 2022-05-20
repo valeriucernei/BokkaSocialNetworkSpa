@@ -10,8 +10,6 @@ import {PostService} from "../shared/post.service";
 })
 export class PostTopComponent implements AfterViewInit {
 
-  isProgressBarVisible: boolean = true;
-
   posts: PostListModel[];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -25,12 +23,10 @@ export class PostTopComponent implements AfterViewInit {
   }
 
   loadPostsFromApi() {
-    this.isProgressBarVisible = true;
     this.postService.getTopPosts()
       .subscribe( (pagedPosts: PostListModel[]) => {
         console.log(pagedPosts);
         this.posts = pagedPosts;
-        this.isProgressBarVisible = false;
       });
   }
 
