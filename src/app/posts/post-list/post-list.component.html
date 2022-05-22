@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" *ngIf="pagedPosts">
   <app-post *ngFor="let post of pagedPosts.items" class="" [post]="post"></app-post>
   <mat-paginator [length]="pagedPosts.total"
                  [pageIndex]="0"

@@ -41,6 +41,7 @@ export class AuthService {
       }
 
       this.loggedIn = true;
+      this.updateUserPaidStatus();
     }
   }
 
@@ -86,9 +87,9 @@ export class AuthService {
   updateUserPaidStatus() {
     const token = this.getToken();
     const decoded = this.decodeToken(token);
-    const role:string[] = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    const roles:string[] = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
 
-    this.paidUser = role.includes('PaidUser');
+    this.paidUser = roles.includes('PaidUser');
   }
 
   getToken(): string {

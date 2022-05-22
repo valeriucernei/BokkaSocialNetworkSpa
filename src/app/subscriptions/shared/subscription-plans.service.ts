@@ -24,7 +24,8 @@ export class SubscriptionPlansService {
   ) { }
 
   getPlans(): Observable<SubscriptionPlanModel[]> {
-    return this.http.get<SubscriptionPlanModel[]>(this.baseUrl);
+    return this.http.get<SubscriptionPlanModel[]>(this.baseUrl)
+      .pipe(catchError(this.errorHandling.handleError<SubscriptionPlanModel[]>()));
   }
 
   requestMemberSession(price: SubscriptionPlanModel): Observable<SessionModel> {

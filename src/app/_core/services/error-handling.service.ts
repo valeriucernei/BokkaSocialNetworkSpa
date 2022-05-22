@@ -18,8 +18,10 @@ export class ErrorHandlingService {
 
       let isArray: boolean = Array.isArray(error.error);
 
-      if (!isArray)
-        this.message += error.error.Message;
+      if (!isArray) {
+        if (error.error.Message)
+          this.message += error.error.Message;
+      }
       else {
         error.error.forEach((e: any) => {
           this.message += e.description + '\n';

@@ -23,23 +23,28 @@ export class PostService {
   ) { }
 
   getPosts(paginatedRequest: PaginatedRequest): Observable<PagedResult<PostListModel>> {
-    return this.http.post<PagedResult<PostListModel>>(this.baseUrl + "search", paginatedRequest);
+    return this.http.post<PagedResult<PostListModel>>(this.baseUrl + "search", paginatedRequest)
+      .pipe(catchError(this.errorHandling.handleError<PagedResult<PostListModel>>()));
   }
 
   getPostsNoFiltering(paginatedRequest: PaginatedRequestNoFilters): Observable<PagedResult<PostListModel>> {
-    return this.http.post<PagedResult<PostListModel>>(this.baseUrl + "search", paginatedRequest);
+    return this.http.post<PagedResult<PostListModel>>(this.baseUrl + "search", paginatedRequest)
+      .pipe(catchError(this.errorHandling.handleError<PagedResult<PostListModel>>()));
   }
 
   getTopPosts(): Observable<PostListModel[]> {
-    return this.http.get<PostListModel[]>(this.baseUrl + "top");
+    return this.http.get<PostListModel[]>(this.baseUrl + "top")
+      .pipe(catchError(this.errorHandling.handleError<PostListModel[]>()));
   }
 
   getUserPosts(userId: string): Observable<PostListModel[]> {
-    return this.http.get<PostListModel[]>(this.baseUrl + "user/" + userId);
+    return this.http.get<PostListModel[]>(this.baseUrl + "user/" + userId)
+      .pipe(catchError(this.errorHandling.handleError<PostListModel[]>()));
   }
 
   getPost(postId: string): Observable<PostListModel> {
-    return this.http.get<PostListModel>(this.baseUrl + "post/" + postId);
+    return this.http.get<PostListModel>(this.baseUrl + "post/" + postId)
+      .pipe(catchError(this.errorHandling.handleError<PostListModel>()));
   }
 
   createPost(newPostModel: PostNewModel): Observable<PostModel> {
