@@ -8,8 +8,6 @@ import {ProgressBarService} from "../progress-bar.service";
 })
 export class ProgressBarComponent{
 
-  showLoading: boolean = false;
-
   constructor(private progressBarService: ProgressBarService) { }
 
   get showLoadingBar(): boolean {

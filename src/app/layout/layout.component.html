@@ -16,7 +16,7 @@
       <a mat-list-item routerLink="/personal-posts" *ngIf="authService.loggedIn">Your posts</a>
       <a mat-list-item routerLink="/top">TOP 5 Posts</a>
       <mat-divider></mat-divider>
-      <a mat-list-item routerLink="/profile" *ngIf="authService.loggedIn">Settings</a>
+      <a mat-list-item routerLink="/profile/settings" *ngIf="authService.loggedIn">Settings</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -42,7 +42,7 @@
 
       <mat-menu #navigationProfile="matMenu">
         <button mat-menu-item routerLink="/profile">Your Profile</button>
-        <button mat-menu-item routerLink="/profile">Settings</button>
+        <button mat-menu-item routerLink="/profile/settings">Settings</button>
         <button mat-menu-item routerLink="/profile/change-password">Change password</button>
         <mat-divider></mat-divider>
         <button mat-menu-item (click)="authService.logOut()">Log out</button>

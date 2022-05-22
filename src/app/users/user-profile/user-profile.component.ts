@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../_core/services/auth.service";
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../shared/user.service";
-import {SnackService} from "../../shared/snack.service";
 import {UserProfileModel} from "../shared/models/user-profile.model";
+import {InvoiceService} from "../shared/invoice.service";
+import {InvoiceModel} from "../shared/models/invoice.model";
+import {SubscriptionService} from "../../subscriptions/shared/subscription.service";
+import {SubscriptionModel} from "../../subscriptions/shared/models/subscription.model";
 
 @Component({
   selector: 'app-user-profile',
@@ -12,13 +13,18 @@ import {UserProfileModel} from "../shared/models/user-profile.model";
 })
 export class UserProfileComponent implements OnInit {
 
-  form: FormGroup = this.CreateForm();
+  userData: UserProfileModel;
+
+  invoicesDataSource: InvoiceModel[];
+  invoicesDisplayedColumns: string[] = ['amount', 'createdDateTime', 'status'];
+
+  subscriptionsDataSource: SubscriptionModel[];
+  subscriptionsDisplayedColumns: string[] = ['startDateTime', 'endDateTime', 'active'];
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
     private userService: UserService,
-    private snackService: SnackService,
+    private invoiceService: InvoiceService,
+    private subscriptionService: SubscriptionService
   ) { }
 
   ngOnInit(): void {
@@ -26,53 +32,26 @@ export class UserProfileComponent implements OnInit {
   }
 
   loadDataFromApi() {
-    this.form.disable();
-
     this.userService.getPersonalProfileData()
-      .subscribe((personalProfileModel: UserProfileModel) => {
-        this.form.enable();
-
-        this.form.patchValue(personalProfileModel);
+      .subscribe((user: UserProfileModel) => {
+        this.userData = user;
       });
-  }
 
-  onSubmit() {
-    const formData: UserProfileModel = {
-      ...this.form.value
-    };
+    this.invoiceService.getPersonalInvoices()
+      .subscribe((invoices: InvoiceModel[]) => {
+        this.invoicesDataSource = invoices;
+      });
 
-    this.form.disable();
-
-    this.userService.updatePersonalProfileData(formData)
-      .subscribe((personalProfileModel: UserProfileModel) => {
-        this.form.enable();
-
-        if (!personalProfileModel) return;
-
-        this.form.patchValue(personalProfileModel);
-        this.snackService.openSnack("Changes saved successfully.");
+    this.subscriptionService.getPersonalSubscriptions()
+      .subscribe((subscriptions: SubscriptionModel[]) => {
+        this.subscriptionsDataSource = subscriptions;
       })
   }
 
-  private CreateForm(): FormGroup {
-    return this.fb.group({
-      firstName: ['', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(24)]],
-
-      lastName: ['',
-        Validators.maxLength(24)],
-
-      username: ['', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(32)]],
-
-      email: ['', [
-        Validators.required,
-        Validators.email]]
-    });
+  isSubscriptionActive(expDate: Date): boolean {
+    const expDate2 = new Date(expDate);
+    const currentDate = new Date();
+    return expDate2 > currentDate;
   }
 
 }

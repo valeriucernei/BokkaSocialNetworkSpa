@@ -60,7 +60,9 @@ export class AuthService {
 
   refreshToken():Observable<BearerToken> {
     return this.http
-      .get<BearerToken>(this.baseUrl + 'refresh-token/')
+      .get<BearerToken>(this.baseUrl + 'refresh-token/', {
+        headers: {"isTokenRefreshing": "true"}
+      })
       .pipe(catchError(this.errorHandling.handleError<BearerToken>()));
   }
 
