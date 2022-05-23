@@ -8,6 +8,7 @@ import {PostPhotoService} from "../shared/post-photo.service";
 import {SnackService} from "../../shared/snack.service";
 import {PostModel} from "../shared/models/post.model";
 import {PostNewModel} from "../shared/models/post-new.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-post-new',
@@ -30,6 +31,7 @@ export class PostNewComponent{
     private snackService: SnackService,
     private postService: PostService,
     private postPhotoService: PostPhotoService,
+    private router: Router
   ) { }
 
   prepareFile(files: FileList) {
@@ -69,8 +71,11 @@ export class PostNewComponent{
 
         if (this.fileList.length == 0) {
           this.snackService.openSnack("Post created successfully!");
+
           this.form.reset();
           this.clearPhotos();
+
+          this.router.navigate(['/home']).then();
           return;
         }
 
@@ -90,6 +95,8 @@ export class PostNewComponent{
 
           this.form.reset();
           this.clearPhotos();
+
+          this.router.navigate(['/home']).then();
         }
       });
   }

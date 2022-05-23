@@ -21,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const accessToken = localStorage.getItem('accessToken');
 
-    if (!request.headers.has("isTokenRefreshing"))
+    if (this.authService.loggedIn && !request.headers.has("isTokenRefreshing"))
       this.checkTokenSoonExpire(accessToken);
 
     if(accessToken) {

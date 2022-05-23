@@ -35,7 +35,7 @@
           Max length: 512 characters.
         </mat-error>
       </mat-form-field>
-      Characters: {{form.get(['content']).value.length}}/512.
+      <span *ngIf="form.get(['content']).value">Characters: {{form.get(['content']).value.length}}/512.</span>
 
       <div class="row-item" style="margin-top: 16px;">
         <input #file type="file"
